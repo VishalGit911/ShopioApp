@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -20,6 +21,38 @@ class _SigninBodyState extends State<SigninBody> {
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
 
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> signIn(
+      {required String fEmail, required String Fpassword}) async {
+    await _auth
+        .signInWithEmailAndPassword(email: fEmail, password: Fpassword)
+        .then(
+      (value) {
+        Navigator.pushReplacementNamed(context, AppRoute.home);
+        Fluttertoast.showToast(
+            msg: "Login SuccessFull",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            textColor: Colors.white,
+            fontSize: 16.0,
+            backgroundColor: Colors.black);
+      },
+    ).onError(
+      (error, stackTrace) {
+        Fluttertoast.showToast(
+            msg: "Not User Found",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            textColor: Colors.white,
+            fontSize: 16.0,
+            backgroundColor: Colors.black);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +62,6 @@ class _SigninBodyState extends State<SigninBody> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Image.asset(
@@ -113,36 +145,31 @@ class _SigninBodyState extends State<SigninBody> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    String email1 = emailcontroller.text.toString();
-                    String password1 = passwordcontroller.text.toString();
-                    reseterror();
-                    if (!RegSignin.emailChek(email1)) {
-                      email = "Enter Valid Email";
-                      Fluttertoast.showToast(
-                          msg: "Enter Valid Email",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                          backgroundColor: Colors.black);
-                    }
-                    if (!RegSignin.passwordChek(password1)) {
-                      password = "Enter valid password";
+                  signIn(
+                      fEmail: emailcontroller.text.toString(),
+                      Fpassword: passwordcontroller.text.toString());
 
-                      Fluttertoast.showToast(
-                          msg: "Enter Valid Password",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                          backgroundColor: Colors.black);
-                    } else {
-                      Navigator.pushNamed(context, AppRoute.home);
-                    }
-                  });
+                  // setState(() {
+                  //   String email1 = emailcontroller.text.toString();
+                  //   String password1 = passwordcontroller.text.toString();
+                  //   reseterror();
+                  //   // if (!RegSignin.emailChek(email1)) {
+                  //   //   email = "Enter Valid Email";
+                  //   //   Fluttertoast.showToast(
+                  //   //       msg: "Enter Valid Email",
+                  //   //       toastLength: Toast.LENGTH_SHORT,
+                  //   //       gravity: ToastGravity.BOTTOM,
+                  //   //       timeInSecForIosWeb: 1,
+                  //   //       textColor: Colors.white,
+                  //   //       fontSize: 16.0,
+                  //   //       backgroundColor: Colors.black);
+                  //   // }
+                  //   // if (!RegSignin.passwordChek(password1)) {
+                  //   //   password = "Enter valid password";
+                  //   //
+                  //   //
+                  //   // }
+                  // });
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue.shade800,

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "326481926691",
+    "project_id": "shoppio-353dc",
+    "storage_bucket": "shoppio-353dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:326481926691:android:3dd7dd80915b1cc4ad2f96",
+        "android_client_info": {
+          "package_name": "com.example.shoppio_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMWjrdnMV29LYPll1065CxXW1HoLe5O3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
